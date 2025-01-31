@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: connector
+resources:
+  - secrets
+  - connector.yaml
+  - connector-ui.yaml
+  - ingress.yaml
+  - namespace.yaml
+  - postgres.yaml
+configMapGenerator:
+  - name: connector-config
+    envs:
+      - config/connector/connector.env
+  - name: connector-ui-config
+    envs:
+      - config/connector/connector-ui.env

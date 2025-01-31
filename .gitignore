@@ -1,0 +1,4 @@
+bin/
+*.sec.yaml
+*.p12
+.idea/

@@ -1,0 +1,18 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: postgres
+spec:
+  teamId: "disco"
+  volume:
+    size: 1Gi
+  numberOfInstances: 1
+  users:
+    admin:  # database owner
+      - superuser
+      - createdb
+    edc: [] # edc user
+  databases:
+    edc: edc  # dbname: owner
+  postgresql:
+    version: "16"

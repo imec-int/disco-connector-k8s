@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: connector-ui
+spec:
+  selector:
+    matchLabels:
+      app: connector-ui
+  template:
+    metadata:
+      labels:
+        app: connector-ui
+    spec:
+      containers:
+        - name: connector-ui
+          image: ghcr.io/sovity/edc-ui:3.2.2
+          envFrom:
+            - configMapRef:
+                name: connector-ui-config
+          env:
+            - name: EDC_UI_MANAGEMENT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: api-auth-key
+                  name: connector-secrets
+          ports:
+            - containerPort: 8080
+              name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: connector-ui
+spec:
+  selector:
+    app: connector-ui
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http

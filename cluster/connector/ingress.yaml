@@ -1,0 +1,58 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: connector
+  annotations:
+    cert-manager.io/cluster-issuer: "dev-prod"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - ${domain}
+      secretName: connector-tls
+  rules:
+    - host: ${domain}
+      http:
+        paths:
+          - path: /public
+            pathType: Prefix
+            backend:
+              service:
+                name: connector
+                port:
+                  number: 12001
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: connector
+                port:
+                  number: 11001
+          - path: /api/management
+            pathType: Prefix
+            backend:
+              service:
+                name: connector
+                port:
+                  number: 11002
+          - path: /api/dsp
+            pathType: Prefix
+            backend:
+              service:
+                name: connector
+                port:
+                  number: 11003
+          - path: /api/control
+            pathType: Prefix
+            backend:
+              service:
+                name: connector
+                port:
+                  number: 11004
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: connector-ui
+                port:
+                  number: 8080
