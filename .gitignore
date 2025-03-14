@@ -2,3 +2,4 @@ bin/
 *.sec.yaml
 *.p12
 .idea/
+!docker-compose/mnt/**

@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: connector-ui
-          image: ghcr.io/sovity/edc-ui:3.2.2
+          image: ghcr.io/sovity/edc-ui:4.1.8
           envFrom:
             - configMapRef:
                 name: connector-ui-config

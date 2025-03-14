@@ -1,0 +1,21 @@
+include:
+  - dataspace-compose.yaml
+
+services:
+  daps:
+    image: ghcr.io/sovity/sovity-daps:sha-32a3033
+    platform: linux/amd64
+    command: [start-dev]
+    restart: always
+    environment:
+      KC_HOSTNAME: 'localhost'
+      KC_HTTP_ENABLED: 'true'
+      KEYCLOAK_ADMIN: 'admin'
+      KEYCLOAK_ADMIN_PASSWORD: 'admin'
+      QUARKUS_HTTP_ACCESS_LOG_ENABLED: 'true'
+    volumes:
+      - './daps-db:/opt/keycloak/data'
+    networks:
+      - disco-dataspace
+    ports:
+      - '8080:8080'

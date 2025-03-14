@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: connector
-          image: ghcr.io/imec-int/edc-extensions/sovity-xce:1.0.0
+          image: ghcr.io/imec-int/edc-extensions/sovity-xce:latest
           envFrom:
             - configMapRef:
                 name: connector-config
