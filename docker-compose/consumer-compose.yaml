@@ -15,6 +15,8 @@ services:
     depends_on:
       consumer-db:
         condition: service_healthy
+    env_file:
+      - .env
     environment:
       MY_EDC_PARTICIPANT_ID: 'consumer'
       MY_EDC_TITLE: 'Consumer EDC'
@@ -25,7 +27,7 @@ services:
       MY_EDC_MAINTAINER_NAME: 'imec'
 
       MY_EDC_FQDN: 'consumer-edc'
-      EDC_API_AUTH_KEY: 'ApiKeyDefaultValue'
+      EDC_API_AUTH_KEY: ${EDC_API_AUTH_KEY}
 
       WEB_HTTP_PUBLIC_PATH: '/public'
       WEB_HTTP_PUBLIC_PORT: 12001
@@ -50,7 +52,7 @@ services:
       EDC_OAUTH_TOKEN_EXPIRATION: 15 # in minutes
       EDC_OAUTH_CLIENT_ID: 'consumer'
       EDC_KEYSTORE: 'config/keystore/consumer.p12'
-      EDC_KEYSTORE_PASSWORD: 'consumer'
+      EDC_KEYSTORE_PASSWORD: ${EDC_CONSUMER_KEYSTORE_PASSWORD}
       EDC_OAUTH_CERTIFICATE_ALIAS: 'consumer'
       EDC_OAUTH_PRIVATE_KEY_ALIAS: 'consumer'
     volumes:
@@ -74,11 +76,13 @@ services:
       - '11015:5005'
     networks:
       - consumer-network
+    env_file:
+      - .env
     environment:
       EDC_UI_ACTIVE_PROFILE: 'sovity-open-source'
       EDC_UI_CONFIG_URL: 'edc-ui-config'
       EDC_UI_MANAGEMENT_API_URL: 'http://localhost:11002/api/management'
-      EDC_UI_MANAGEMENT_API_KEY: 'ApiKeyDefaultValue'
+      EDC_UI_MANAGEMENT_API_KEY: ${EDC_API_AUTH_KEY}
       EDC_UI_CATALOG_URLS: 'http://consumer-edc:11003/api/dsp'
       EDC_UI_MANAGEMENT_API_URL_SHOWN_IN_DASHBOARD: 'http://localhost:11002/control/api/management'
       NGINX_ACCESS_LOG: 'off'
@@ -86,9 +90,11 @@ services:
   consumer-db:
     image: docker.io/bitnami/postgresql:15
     restart: always
+    env_file:
+      - .env
     environment:
       POSTGRESQL_USERNAME: 'edc'
-      POSTGRESQL_PASSWORD: 'edc'
+      POSTGRESQL_PASSWORD: ${POSTGRESQL_PASSWORD}
       POSTGRESQL_DATABASE: 'edc'
     ports:
       - '54322:5432'

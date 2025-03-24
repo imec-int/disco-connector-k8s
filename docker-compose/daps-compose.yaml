@@ -7,11 +7,13 @@ services:
     platform: linux/amd64
     command: [start-dev]
     restart: always
+    env_file:
+      - .env
     environment:
       KC_HOSTNAME: 'localhost'
       KC_HTTP_ENABLED: 'true'
       KEYCLOAK_ADMIN: 'admin'
-      KEYCLOAK_ADMIN_PASSWORD: 'admin'
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       QUARKUS_HTTP_ACCESS_LOG_ENABLED: 'true'
     volumes:
       - './daps-db:/opt/keycloak/data'

@@ -3,6 +3,11 @@
 Includes a simple deployment of a sovity Connector that uses https://daps.disco.ai-data.imec.be/ as the authority
 server.
 
+## Docker Compose
+
+The docker-compose file is provided for local development and testing. Create a `.env` file from the `.env.template` and
+start the services.
+
 ## Prerequisites
 
 - A Managed Kubernetes cluster
